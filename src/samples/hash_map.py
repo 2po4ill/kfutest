@@ -1,150 +1,169 @@
-class Node:
-    def __init__(self, value, key, next = None):
-        self.value = value
-        self.key = key
-        self.next = next
+from typing import Iterable, Tuple
+from src.maps.base_map import BaseMap
 
 
-class LinkedList:
-    def __init__(self):
-        self.head = None
-        self.last = None
-        self.length = 0
+class HashMap(BaseMap):
+    """A class to represent HashMap data structur e"""
+    class Node:
 
-    def __str__(self):
-        if self.head is not None:
-            llstr = '[' + str(self.head.value) + '(' + str(self.head.key) + ')'
-            while self.head.next is not None:
-                self.head=self.head.next
-                llstr += ',' + str(self.head.value) + '(' + str(self.head.key) + ')'
-            return llstr + ']'
-        return '[None]'
+        def __init__(self, value, key, next_node=None):
+            self.value = value
+            self.key = key  # key for dictionary is stored here
+            self.next = next_node
 
-    def addend(self, value, key):
-        if self.head is None:
-            self.head = Node(value, key)
-            self.last = self.head
+        def __iter__(self) -> Iterable[Tuple[str, int]]:
+            yield self.key, self.value
+
+            if self.next is not None:
+                yield from self.next
+
+        def __str__(self):
+            return f"key: {self.key}, value: {self.value}"
+
+    # Linked list`s class
+    class LinkedList:
+        """A class to represent LinkedList data structure"""
+        def __init__(self):
+            self.head = None
+            self.end = None
+            self.length = 0
+
+        def insert_at_end(self, value, key):
+            """Method that inserts a node at the end of LinkedList"""
+            if self.head is None:
+                self.head = self.end = HashMap.Node(value, key)
+            else:
+                self.end.next = self.end = HashMap.Node(value, key)
             self.length += 1
-        else:
+
+        def delete_by_key(self, key):
+            """Method that deletes node from LinkedList by key"""
             current = self.head
+            if self.head.key == key:
+                self.head = self.head.next
+            else:
+                while current.next is not None:
+                    if current.next.key == key:
+                        current.next = current.next.next
+                        self.length -= 1
+                        break
+
+        def __len__(self):
+            return self.length
+
+        # method for formatting LinkedList
+        def __str__(self):
+            if self.head is not None:
+                current = self.head
+                result = f'[{current.value}, '
+                while current.next is not None:
+                    current = current.next
+                    result += f'{current.value}, '
+                result = result[:-2]
+                result += ']'
+                return result
+            return '[]'
+
+        def __iter__(self) -> Iterable[Tuple[str, int]]:
+            if self.head is not None:
+                yield from self.head
+
+    # initializing dictionary
+    def __init__(self, size=10):
+        self._inner_list = [None] * 10
+        self._size = size  # attribute to store length
+        self._cnt = 0   # attribute to store how many elements were added
+
+    def __iter__(self) -> Iterable[Tuple[str, int]]:
+        for linklist in self._inner_list:
+            yield from linklist or []
+
+    # getting item by key
+    def __getitem__(self, key):
+        linklist = self._inner_list[hash(key) % self._size]
+        if linklist is None:
+            raise KeyError('No element with such key')
+        current = linklist.head
+        while current is not None:
+            if current.key == key:
+                return current.value
+            current = current.next
+        raise KeyError('No element with such key')
+
+    # setting element by magic method
+    def __setitem__(self, key, value):
+        index = hash(key) % self._size
+        if self._inner_list[index] is None:
+            self._inner_list[index] = HashMap.LinkedList()
+            self._inner_list[index].insert_at_end(value, key)
+        else:
+            lst = self._inner_list[index]
+            current = lst.head
             while current is not None:
                 if current.key == key:
-                    current.value = value  #заменяем значение если есть уже похожий ключ
+                    current.value = value
                     return
                 current = current.next
-            self.last.next = Node(value, key)
-            self.last = self.last.next
-            self.length += 1
-
-    def delem(self, key):
-        s = 0
-        current = self.head
-        if current.key == key:
-            self.head = self.head.next
-            self.length -= 1
-        else:
-            while current.next is not None:
-                if current.next.key == key:
-                    if current.next.next is None:
-                        current.next = None
-                    else:
-                        current.next = current.next.next
-                    self.length -= 1
-                    s += 1
-                if current.next is not None and current.next.key != key:
-                    current = current.next
-                else:
-                    if current.next.next is not None:
-                        current.next = current.next.next
-                    else:
-                        current.next = None
-        if s != 0:
-            return
-        else:
-            return print('wrong key, try again')
-
-class HashMap:
-    def __init__(self, size = 10):
-        self._inner_list = [None] * size
-        self._size = size
-        self._ctr = 0  #counter
-
-    def __getitem__(self, key):
-        linkedlist = self._inner_list[hash(key) % self._size]  #получаем связанный список из заданной ячейки хэшмапы
-        if linkedlist is None:
-            return print('wrong key')
-        while linkedlist.head is not None:
-            if linkedlist.head.key == key:
-                return linkedlist.head.value
-            linkedlist = linkedlist.next
-        return None
-
-    def __setitem__(self, key, value):
-        adress = hash(key) % self._size
-        if self._inner_list[adress] is None:
-            self._inner_list[adress] = LinkedList()
-            self._inner_list[adress].addend(value, key)  #засовываем в пустую ячейку хэшмапы связанный список с ключом и value
-        else:
-            while self._inner_list[adress].head is not None:
-                if self._inner_list[adress].head.key == key:
-                    self._inner_list[adress].head.value = value  #ищем узел с похожим ключом и меняем значение
-                    return
-                self._inner_list[adress].head = self._inner_list[adress].head.next
-            self._inner_list[adress].addend(value, key)
-        self._ctr += 1
-        if self._ctr >= 0.8 * self._size:
-            self._size = self._size * 2 #при увеличении счетчика ключей/значений надо увеличивать размер мапы
-            new_list = [None] * self._size
-            for _ in self._inner_list:
-                if _ is not None:
-                    while _.head is not None:
-                        adress = hash(_.head.key) % self._size
-                        if new_list[adress] is None:
-                            new_list[adress] = LinkedList()
-                            new_list[adress].addend(_.head.key, _.head.value)  #заново перераспределяем ключи/значения
+            lst.insert_at_end(value, key)
+        self._cnt += 1
+        # if number of elements in dict is 80% of size, increasing size
+        if self._cnt >= 0.8 * self._size:
+            self._size = self._size * 17 // 10  # increasing by 1.7 to make more random indexes
+            new_inner_list = [None] * self._size
+            for linlist in self._inner_list:
+                if linlist is not None:
+                    current = linlist.head
+                    while current is not None:
+                        index = hash(current.key) % self._size
+                        if new_inner_list[index] is None:
+                            new_inner_list[index] = HashMap.LinkedList()
+                            new_inner_list[index].insert_at_end(current.value, current.key)
                         else:
-                            new_list[adress].addend(_.head.key, _.head.value)
-                        _.head = _.head.next
-            self._inner_list = new_list
+                            lst = new_inner_list[index]
+                            lst.insert_at_end(current.key, current.value)
+                            # while curr is not None:
+                            #     if curr.key == key:
+                            #         curr.value = value
+                            #         return
+                            #     curr = curr.next
+                            # lst.insert_at_end(value, key)
+                        current = current.next
+            self._inner_list = new_inner_list
 
+    # deleting element of HashMap by key and making HashMap smaller is necessary
     def __delitem__(self, key):
-        booly = 0
-        for linkedlist in self._inner_list:
-            if linkedlist is not None:
-                lengthcheck = linkedlist.length
-                linkedlist.delem(key)
-                if linkedlist.length != lengthcheck:
-                    booly = 1
-                    break;
-        if booly == 1:
-            self._cnt -= 1
-            if self._size * 0.8 > self._ctr and self._size > 10:
-                self._size = self._size // 2
-                new_list = [None] * self._size
-                for _ in self._inner_list:
-                    if _ is not None:
-                        while _.head is not None:
-                            adress = hash(_.head.key) % self._size
-                            if new_list[adress] is None:
-                                new_list[adress] = LinkedList()
-                                new_list[adress].addend(_.head.key, _.head.value)  # заново перераспределяем ключи/значения
-                            else:
-                                new_list[adress].addend(_.head.key, _.head.value)
-                            _.head = _.head.next
-                self._inner_list = new_list
-        else:
-            return print('wrong key')
+        for linklist in self._inner_list:
+            if linklist is not None:
+                linklist.delete_by_key(key)
+        self._cnt -= 1
+        if self._size * 0.8 > self._cnt and self._size > 10:
+            self._size = self._size // 17 * 10  # decreasing by 2
+            new_inner_list = [None] * self._size
+            for linlist in self._inner_list:
+                if linlist is not None:
+                    current = linlist.head
+                    while current is not None:
+                        index = hash(current.key) % self._size
+                        if new_inner_list[index] is None:
+                            new_inner_list[index] = HashMap.LinkedList()
+                            new_inner_list[index].insert_at_end(current.value, current.key)
+                        else:
+                            lst = new_inner_list[index]
+                            lst.insert_at_end(current.value, current.key)
+                        current = current.next
+            self._inner_list = new_inner_list
+
+    def __len__(self):
+        return self._cnt
+
+    def __str__(self):
+        return '[' + ', '.join(map(str, self._inner_list)) + ']'
 
 
-arr = LinkedList()
-
-
-arr.addend(15, 'elephant')
-
-arr.addend(30, 'elephant')
-arr.addend(31, 'elephant')
-arr.delem('elephant')
-
-
-print(arr)
-
+if __name__ == "__main__":
+    hm = HashMap()
+    for i in range(10):
+        hm[i] = i
+    del hm[3]
+    list_map = list(hm)
+    print(list_map)
