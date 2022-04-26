@@ -33,7 +33,7 @@ class BaseMap(ABC):
 
         with open(path, "w", encoding="utf-8") as file:
             for key, value in self:
-                file.write(f"{key}\t{data}\n")
+                file.write(f"{key}\t{value}\n")
 
     @classmethod
     def read(cls, path: str) -> 'BaseMap':
