@@ -70,19 +70,17 @@ class TreeMap:
                 result = inner_delitem(node.right, key)
                 node.right = result
                 return node
-            else:
-                if node.left is None and node.right is None:
-                    return None
-                if node.left is not None and node.right is None:
-                    return node.left
-                if node.left is None and node.right is not None:
-                    return node.right
-                else:
-                    min_node = TreeMap.find_min_node(node.right)
-                    node.key = min_node.key
-                    node.value = min_node.value
-                    node.right = inner_delitem(node.right, min_node.key)
-                    return node
+            if node.left is None and node.right is None:
+                return None
+            if node.left is not None and node.right is None:
+                return node.left
+            if node.left is None and node.right is not None:
+                return node.right
+            min_node = TreeMap.find_min_node(node.right)
+            node.key = min_node.key
+            node.value = min_node.value
+            node.right = inner_delitem(node.right, min_node.key)
+            return node
         self.root = inner_delitem(self.root, key)
 
     def __str__(self):
