@@ -4,7 +4,7 @@
 class Node:
     """ Класс для создания узла."""
 
-    def __init__(self, value, key, next = None):
+    def __init__(self, value, key, next=None):
         self.value = value
         self.next = next
         self.key = key
@@ -28,6 +28,8 @@ class LinkedList:
         return '[None]'
 
     def addend(self, value, key):
+        """ Метод добавляющий узел в конец односвязного списка."""
+
         if self.head is None:
             self.head = Node(value, key)
             self.back = self.head
@@ -44,6 +46,8 @@ class LinkedList:
             self.length += 1
 
     def delem(self, key):
+        """ Метод удаления узла из односвязного списка по ключу."""
+
         current = self.head
         if current.key == key:
             self.head = self.head.next
@@ -58,6 +62,8 @@ class LinkedList:
 
 
 class HashMap:
+    """ Класс для создания Hash map."""
+
     def __init__(self, _size=10):
         self._size = _size
         self._count = 0
