@@ -17,9 +17,8 @@ class TreeNode:
 
     def __eq__(self, other):
         if self.key == other.key and self.value == other.value:
-            return true
-        else:
-            return false
+            return True
+        return False
 
 
 class TreeMap:
