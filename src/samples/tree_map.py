@@ -48,8 +48,7 @@ class TreeMap:
                 return node.value
             if key < node.key:
                 return inner_getitem(node.left)
-            else:
-                return inner_getitem(node.right)
+            return inner_getitem(node.right)
         return inner_getitem(self.root)
 
     @staticmethod
@@ -67,16 +66,16 @@ class TreeMap:
             if key < node.key:
                 node.left = inner_delitem(node.left, key)
                 return node
-            elif key > node.key:
+            if key > node.key:
                 result = inner_delitem(node.right, key)
                 node.right = result
                 return node
             else:
                 if node.left is None and node.right is None:
                     return None
-                elif node.left is not None and node.right is None:
+                if node.left is not None and node.right is None:
                     return node.left
-                elif node.left is None and node.right is not None:
+                if node.left is None and node.right is not None:
                     return node.right
                 else:
                     min_node = TreeMap.find_min_node(node.right)
