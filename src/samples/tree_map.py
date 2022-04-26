@@ -31,14 +31,13 @@ class TreeMap:
         def inner_setitem(node):
             if node is None:
                 return TreeNode(key, value)
+            if key == node.key:
+                node.value = value
+            elif key < node.key:
+                node.left = inner_setitem(node.left)
             else:
-                if key == node.key:
-                    node.value = value
-                elif key < node.key:
-                    node.left = inner_setitem(node.left)
-                else:
-                    node.right = inner_setitem(node.right)
-                return node
+                node.right = inner_setitem(node.right)
+            return node
         self.root = inner_setitem(self.root)
 
     def __getitem__(self, key):
@@ -47,7 +46,7 @@ class TreeMap:
                 raise KeyError
             if key == node.key:
                 return node.value
-            elif key < node.key:
+            if key < node.key:
                 return inner_getitem(node.left)
             else:
                 return inner_getitem(node.right)
