@@ -4,7 +4,7 @@
 class Node:
     """ Класс для создания узла."""
 
-    def __init__(self, value, key, next):
+    def __init__(self, value, key, next=None):
         self.value = value
         self.next = next
         self.key = key
@@ -14,9 +14,8 @@ class Node:
 
     def __eq__(self, other):
         if self.key == other.key and self.value == other.value:
-            return true
-        else:
-            return false
+            return True
+        return False
 
 
 class LinkedList:
