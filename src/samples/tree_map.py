@@ -1,7 +1,11 @@
+"""Модуль для создания Tree map."""
+
 from itertools import chain
 
 
 class TreeNode:
+    """Модуль для создания узла дерева."""
+
     def __init__(self, key, value, left=None, right=None):
         self.key = key
         self.value = value
@@ -11,8 +15,16 @@ class TreeNode:
     def __str__(self):
         return f"TreeNode(key={self.key}, value={self.value}"
 
+    def __eq__(self, other):
+        if self.key == other.key and self.value == other.value:
+            return true
+        else:
+            return false
+
 
 class TreeMap:
+    """Модуль для создания Tree map."""
+
     def __init__(self):
         self.root = None
 
@@ -44,6 +56,8 @@ class TreeMap:
 
     @staticmethod
     def find_min_node(node):
+        """Метод для нахождения самого левого узла без потомков(минимальный узел)."""
+
         if node.left is not None:
             return TreeMap.find_min_node(node.left)
         return node

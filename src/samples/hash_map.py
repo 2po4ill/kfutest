@@ -4,10 +4,19 @@
 class Node:
     """ Класс для создания узла."""
 
-    def __init__(self, value, key, next=None):
+    def __init__(self, value, key, next):
         self.value = value
         self.next = next
         self.key = key
+
+    def __str__(self):
+        return f"Node(key={self.key}, value={self.value}"
+
+    def __eq__(self, other):
+        if self.key == other.key and self.value == other.value:
+            return true
+        else:
+            return false
 
 
 class LinkedList:
@@ -118,12 +127,3 @@ class HashMap:
         for linkedlist in self._inner_list:
             printed += str(linkedlist) + '\n'
         return printed
-
-
-discord = LinkedList()
-discord.addend(19, 'kreep')
-discord.addend(5, 'dog')
-discord.addend(10, 'dog')
-discord.addend(15, 'wolk')
-discord.delem('dog')
-print(discord)
