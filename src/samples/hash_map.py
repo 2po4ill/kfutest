@@ -1,4 +1,9 @@
+"""Модуль для создания Hash map."""
+
+
 class Node:
+    """ Класс для создания узла."""
+
     def __init__(self, value, key, next = None):
         self.value = value
         self.next = next
@@ -6,6 +11,8 @@ class Node:
 
 
 class LinkedList:
+    """ Класс для создания односвязанного списка."""
+
     def __init__(self):
         self.head = None
         self.back = None
@@ -80,10 +87,10 @@ class HashMap:
             self._size = self._size * 2
             new_inner_list = [LinkedList()] * self._size
             for linkedlist in self._inner_list:
-                currentnod = linkedlist.head
-                while currentnod is not Node:
-                    new_inner_list[hash(currentnod.key) % self._size].addend(currentnod.value, currentnod.key)
-                    currentnod = currentnod.next
+                node1 = linkedlist.head
+                while node1 is not Node:
+                    new_inner_list[hash(node1.key) % self._size].addend(node1.value, node1.key)
+                    node1 = node1.next
             self._inner_list = new_inner_list
 
     def __delitem__(self, key):
@@ -94,10 +101,10 @@ class HashMap:
             self._size = self._size // 2
             new_inner_list = [LinkedList()] * self._size
             for linkedlist in self._inner_list:
-                currentnod = linkedlist.head
-                while currentnod is not Node:
-                    new_inner_list[hash(currentnod.key) % self._size].addend(currentnod.value, currentnod.key)
-                    currentnod = currentnod.next
+                node2 = linkedlist.head
+                while node2 is not None:
+                    new_inner_list[hash(node2.key) % self._size].addend(node2.value, node2.key)
+                    node2 = node2.next
             self._inner_list = new_inner_list
 
     def __str__(self):
@@ -114,4 +121,3 @@ discord.addend(10, 'dog')
 discord.addend(15, 'wolk')
 discord.delem('dog')
 print(discord)
-
