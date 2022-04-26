@@ -1,5 +1,6 @@
 """Модуль для создания Hash map."""
 
+from src.maps.base_map import BaseMap
 
 class Node:
     """ Класс для создания узла."""
@@ -69,7 +70,7 @@ class LinkedList:
                 current = current.next
 
 
-class HashMap:
+class HashMap(BaseMap):
     """ Класс для создания Hash map."""
 
     def __init__(self, _size=10):

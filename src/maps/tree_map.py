@@ -1,6 +1,7 @@
 """Модуль для создания Tree map."""
 
 from itertools import chain
+from src.maps.base_map import BaseMap
 
 
 class TreeNode:
@@ -21,7 +22,7 @@ class TreeNode:
         return False
 
 
-class TreeMap:
+class TreeMap(BaseMap):
     """Модуль для создания Tree map."""
 
     def __init__(self):
