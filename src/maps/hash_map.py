@@ -130,7 +130,7 @@ class HashMap(BaseMap):
         return printed
 
     def __iter__(self):
-        temp = List()
+        temp = LinkedList()
         for i in self._inner_list:
             for j in i:
                 temp.add_node(j)
