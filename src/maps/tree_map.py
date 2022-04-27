@@ -27,6 +27,10 @@ class TreeMap(BaseMap):
 
     def __init__(self):
         self.root = None
+        self.length = 0
+
+    def __len__(self):
+        return self.length
 
     def __setitem__(self, key, value):
         def inner_setitem(node):
@@ -40,6 +44,7 @@ class TreeMap(BaseMap):
                 node.right = inner_setitem(node.right)
             return node
         self.root = inner_setitem(self.root)
+        self.length += 1
 
     def __getitem__(self, key):
         def inner_getitem(node):
@@ -83,6 +88,7 @@ class TreeMap(BaseMap):
             node.right = inner_delitem(node.right, min_node.key)
             return node
         self.root = inner_delitem(self.root, key)
+        self.length -= 1
 
     def __str__(self):
         nodes = [self.root]

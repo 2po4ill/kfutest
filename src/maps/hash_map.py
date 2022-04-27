@@ -2,6 +2,7 @@
 
 from src.maps.base_map import BaseMap
 
+
 class Node:
     """ Класс для создания узла."""
 
@@ -127,3 +128,13 @@ class HashMap(BaseMap):
         for linkedlist in self._inner_list:
             printed += str(linkedlist) + '\n'
         return printed
+
+    def __iter__(self):
+        temp = List()
+        for i in self._inner_list:
+            for j in i:
+                temp.add_node(j)
+        return temp.__iter__()
+
+    def __len__(self):
+        return self.__iter__().length
