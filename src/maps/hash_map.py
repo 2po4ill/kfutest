@@ -26,6 +26,7 @@ class LinkedList:
     def __init__(self):
         self.head = None
         self.back = None
+        self.node = None
         self.length = 0
 
     def __str__(self):
@@ -69,6 +70,10 @@ class LinkedList:
                     self.length -= 1
                     return
                 current = current.next
+
+    def __iter__(self):
+        self.node = self.head
+        return self
 
 
 class HashMap(BaseMap):
@@ -133,7 +138,7 @@ class HashMap(BaseMap):
         temp = LinkedList()
         for i in self._inner_list:
             for j in i:
-                temp.add_node(j)
+                temp.addend(j)
         return temp.__iter__()
 
     def __len__(self):
