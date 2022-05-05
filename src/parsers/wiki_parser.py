@@ -3,6 +3,8 @@
 import os
 import uuid
 import re
+import requests as req
+import bs4 as bs
 from src.maps.hash_map import HashMap
 
 
