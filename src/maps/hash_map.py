@@ -11,12 +11,7 @@ class Node:
         self.next = next_node
 
     def __str__(self):
-        return f"Node(key={self.key}, value={self.value}"
-
-    def __eq__(self, other):
-        if self.key == other.key and self.value == other.value:
-            return True
-        return False
+        return f"Node(value={self._value}"
 
     def compare_value(self, value) -> bool:
         """ Сравнение значений. """

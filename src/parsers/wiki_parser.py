@@ -19,19 +19,19 @@ def wiki_parser(url: str, base_path):
         os.mkdir(base_path)
         print("Папка создана.")
 
-    bool = True
+    booly = True
     dirlist = os.listdir(base_path)
     path = base_path
     for i in dirlist:
         with open(os.path.join(base_path, i, "url.txt"), "r", encoding="utf-8") as url_file:
             if url_file.read() == url:
-                bool = False  # нашли url
+                booly = False  # нашли url
                 path = os.path.join(path, i)
                 print("url уже был обработан")
                 break
     print("url еще не был обработан")
 
-    if bool:  # если url не нашли, тогда создаем url.txt и content.bin
+    if booly:  # если url не нашли, тогда создаем url.txt и content.bin
         path = os.path.join(path, uuid.uuid4().hex)
         os.mkdir(path)
         with open(path + "\\url.txt", "w", encoding="utf-8") as url_file:
