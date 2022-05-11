@@ -8,10 +8,12 @@ import bs4 as bs
 from src.maps.hash_map import HashMap
 
 
-def wiki_parser(url: str, base_path: str) -> HashMap:
+def wiki_parser(url: str, base_path):
     """Функция для подсчета слов на странице википедии."""
 
-    if os.path.exists:
+    base_path += "\\base_path"
+
+    if os.path.exists(base_path):
         print("Папка уже существует.")
     else:
         os.mkdir(base_path)
@@ -23,21 +25,20 @@ def wiki_parser(url: str, base_path: str) -> HashMap:
     for i in dirlist:
         with open(os.path.join(base_path, i, "url.txt"), "r", encoding="utf-8") as url_file:
             if url_file.read() == url:
-                bool = False #нашли url
-                path += "\\" + i
+                bool = False  # нашли url
                 path = os.path.join(path, i)
                 print("url уже был обработан")
                 break
     print("url еще не был обработан")
 
-    if bool: #если url не нашли, тогда создаем url.txt и content.bin
+    if bool:  # если url не нашли, тогда создаем url.txt и content.bin
         path = os.path.join(path, uuid.uuid4().hex)
         os.mkdir(path)
+        with open(path + "\\url.txt", "w", encoding="utf-8") as url_file:
+            url_file.write(url)
         text = req.request("GET", url).content
         with open(path + "\\content.bin", "wb") as content_file:
             content_file.write(text)
-        with open(path + "\\url.txt", "w", encoding="utf-8") as url_file:
-            url_file.write(url)
 
     with open(path + "\\content.bin", "rb") as content_file:
         soup = bs.BeautifulSoup(content_file, "lxml")
@@ -57,14 +58,14 @@ def wiki_parser(url: str, base_path: str) -> HashMap:
                 except KeyError:
                     hash_map[word] = 1
         hash_map.write(path + "\\words.txt")
-        href_list = HashMap()
-        i = 0
+        href_list = []
         for tag in soup.find_all(href=re.compile("^/wiki/")):
-            href_list[i] = tag["href"]
-            i += 1
-            return href_list
+            href_list.append("https://ru.wikipedia.org" + tag["href"])
+        return href_list
 
 
 if __name__ == "__main__":
-    wiki_parser('https://ru.wikipedia.org/wiki/Чёрмозский_завод',
+    rez = wiki_parser('https://ru.wikipedia.org/wiki/Чёрмозский_завод',
                 r'A:\jkjkjkjk')
+    for j in rez:
+        print(j)
