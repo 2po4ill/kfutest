@@ -9,7 +9,7 @@ from src.maps.hash_map import HashMap
 
 
 def wiki_parser(url: str, base_path):
-    """Функция для подсчета слов на странице википедии."""
+    """Функция для подсчета слов на странице википедии и получении ссылок на встреченные слова"""
 
     base_path += "\\base_path"
 
@@ -65,7 +65,7 @@ def wiki_parser(url: str, base_path):
 
 
 if __name__ == "__main__":
-    rez = wiki_parser('https://ru.wikipedia.org/wiki/Чёрмозский_завод',
+    result = wiki_parser('https://en.wikipedia.org/wiki/B-tree#Insertion',
                 r'A:\jkjkjkjk')
-    for j in rez:
+    for j in result:
         print(j)
