@@ -1,4 +1,4 @@
-"""Модуль для многопоточного или многопроцессорного выполнения функции wiki_parser"""
+"""Модуль для многопоточного выполнения функции wiki_parser"""
 
 from concurrent.futures import ThreadPoolExecutor
 from itertools import repeat
@@ -6,7 +6,7 @@ from src.parsers.wiki_parser import wiki_parser
 
 
 def multi(mode, url, base_path, max_workers=5, deep=3):
-    """ Функция, выполняющая функцию wiki_parser многопоточно или многопроцессорно. """
+    """ Функция, выполняющая функцию wiki_parser многопоточно. """
     beginning = wiki_parser(url, base_path)
     for _ in range(deep - 2):
         executor = mode(max_workers=max_workers)
