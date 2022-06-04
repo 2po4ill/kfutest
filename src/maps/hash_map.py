@@ -104,7 +104,6 @@ class LinkedList:
         if node is None:
             raise StopIteration
         self.node = self.node.next
-        return node._value
 
     def __getitem__(self, item):
         if self.length >= item:
