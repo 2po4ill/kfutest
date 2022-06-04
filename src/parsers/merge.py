@@ -51,30 +51,8 @@ def merge(path1, path2, path):
                         count = 1
 
 
-def multi_merge(paths, path):
-    """
-    Объединить файлы в один.
-    :param paths: список путей к объединяемым файлам.
-    :param path: путь к файлу, получившемуся в результате слияния двух файлов.
-    """
-    temp_path = path[:-4]
-    paths_to_del = []
-    while len(paths) > 2:
-        curr_paths = []
-        len_paths = len(paths)
-        for i in range(0, len_paths - len_paths % 2, 2):
-            temp = temp_path + uuid.uuid4().hex + ".txt"
-            paths_to_del.append(temp)
-            curr_paths.append(temp)
-            merge(paths[i], paths[i + 1], temp)
-        if len_paths % 2 == 1:
-            curr_paths.append(paths[-1])
-            paths = curr_paths
-        else:
-            paths = curr_paths
-    merge(paths[0], paths[1], path)
-    for i in paths_to_del:
-        os.remove(i)
-
 if __name__ == "__main__":
-    merge(r'C:\Users\ydevl\PycharmProjects\kfutest\src\text\1.txt', r'C:\Users\ydevl\PycharmProjects\kfutest\src\text\2.txt', r'C:\Users\ydevl\PycharmProjects\kfutest\src\text\result.txt')
+    path1 = r'C:\Users\ydevl\PycharmProjects\kfutest\src\text\1.txt'
+    path2 = r'C:\Users\ydevl\PycharmProjects\kfutest\src\text\2.txt'
+    result = r'C:\Users\ydevl\PycharmProjects\kfutest\src\text\result.txt'
+    merge(path1, path2, result)
