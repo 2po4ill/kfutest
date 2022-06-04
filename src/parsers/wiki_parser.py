@@ -6,20 +6,6 @@ import re
 import requests as req
 import bs4 as bs
 from src.maps.hash_map import HashMap
-from time import sleep, time
-
-
-def timer_func(func):
-    """Декоратор, замеряющий время выполнения функции"""
-
-    def wrap_func(*args, **kwargs):
-        start = time()
-        result = func(*args, **kwargs)
-        end = time()
-        print(f'Function {func.__name__!r} executed in {(end - start):.4f}s')
-        return result
-
-    return wrap_func
 
 
 def wiki_parser(url: str, base_path):
@@ -79,7 +65,6 @@ def wiki_parser(url: str, base_path):
 
 
 if __name__ == "__main__":
-    result = wiki_parser('https://en.wikipedia.org/wiki/B-tree#Insertion',
-                r'A:\jkjkjkjk')
+    result = wiki_parser('https://en.wikipedia.org/wiki/B-tree#Insertion', r'A:\jkjkjkjk')
     for j in result:
         print(j)
