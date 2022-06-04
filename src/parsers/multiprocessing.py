@@ -2,10 +2,9 @@
 
 from concurrent.futures import ThreadPoolExecutor
 from itertools import repeat
-from src.parsers.wiki_parser import wiki_parser, timer_func
+from src.parsers.wiki_parser import wiki_parser
 
 
-@timer_func
 def multi(mode, url, base_path, max_workers=5, deep=3):
     beginning = wiki_parser(url, base_path)
     for _ in range(deep - 1):
