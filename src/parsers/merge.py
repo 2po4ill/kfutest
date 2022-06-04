@@ -1,6 +1,4 @@
 """Модуль для слияния файлов с подсчетом слов, создаваемых функцией wiki_parser"""
-import uuid
-import os
 
 
 def merge(path1, path2, path):
@@ -52,7 +50,4 @@ def merge(path1, path2, path):
 
 
 if __name__ == "__main__":
-    path1 = r'C:\Users\ydevl\PycharmProjects\kfutest\src\text\1.txt'
-    path2 = r'C:\Users\ydevl\PycharmProjects\kfutest\src\text\2.txt'
-    result = r'C:\Users\ydevl\PycharmProjects\kfutest\src\text\result.txt'
-    merge(path1, path2, result)
+    merge(r'C:\Users\ydevl\PycharmProjects\kfutest\src\text\1.txt', r'C:\Users\ydevl\PycharmProjects\kfutest\src\text\2.txt', r'C:\Users\ydevl\PycharmProjects\kfutest\src\text\result.txt')
