@@ -4,7 +4,7 @@ from concurrent.futures import ThreadPoolExecutor
 from itertools import repeat
 from src.parsers.wiki_parser import wiki_parser
 
-
+@timer_func
 def multi(mode, url, base_path, max_workers=5, deep=3):
     """ Функция, выполняющая функцию wiki_parser многопоточно. """
     beginning = wiki_parser(url, base_path)
